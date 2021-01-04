@@ -76,6 +76,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
+import firebase from "../utilities/firebase";
 
 export default defineComponent({
   setup() {
@@ -84,7 +85,17 @@ export default defineComponent({
     const password = ref("@#!@#asdf1231!_!@#");
 
     function login() {
-      router.push("/dashboard");
+      //router.push("/dashboard");
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.log(e);
+        }
+      )
     }
 
     return {
@@ -92,6 +103,6 @@ export default defineComponent({
       email,
       password,
     };
-  },
+  }
 });
 </script>
