@@ -95,6 +95,7 @@
             >Products</a
           >
           <router-link
+            @click.native="logout"
             to="/"
             class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white"
             >Log out</router-link
@@ -106,18 +107,31 @@
 </template>
 
 <script lang="ts">
+//import firebase from "@firebase/app";
+import firebase from '../utilities/firebase';
 import { defineComponent, ref } from "vue";
 import { useSidebar } from "../hooks/useSidebar";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   setup(_, { emit }) {
     const dropdownOpen = ref(false);
     const { isOpen } = useSidebar();
+    const router = useRouter();
 
     return {
       isOpen,
       dropdownOpen,
     };
   },
+  methods:{
+    logout() {
+      firebase.default.auth().signOut()
+      .then(res => {
+        this.router.push("/");
+      })
+      .catch(e => {});
+    }
+  }
 });
 </script>

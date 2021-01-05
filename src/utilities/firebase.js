@@ -9,7 +9,7 @@
 
 // Add the Firebase products that you want to use
 
-import * as firebase from "firebase/app";
+import * as firebase from "@firebase/app";
 
 import "@firebase/auth";
 //import 'firebase/firestore'

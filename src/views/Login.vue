@@ -65,8 +65,10 @@
             type="submit"
             class="py-2 px-4 text-center bg-indigo-600 rounded-md w-full text-white text-sm hover:bg-indigo-500"
           >
-            Sign in
+          <span v-if="!isLoading">Log in</span>
+          <span v-else>Loading...</span>
           </button>
+
         </div>
       </form>
     </div>
@@ -81,28 +83,47 @@ import firebase from "../utilities/firebase";
 export default defineComponent({
   setup() {
     const router = useRouter();
-    const email = ref("johndoe@mail.com");
-    const password = ref("@#!@#asdf1231!_!@#");
+    const email = ref("francesco.capuzzo@zoho.com");
+    const password = ref('sQ4.iP9?kK7;aL6;xE8}bW1*rR1"rL6#');
+    const isLoading = false;
 
     function login() {
-      //router.push("/dashboard");
-      firebase
+      this.isLoading = true;
+      firebase.default
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then((res) => {
           console.log(res);
+          this.isLoading = true;
+          router.push("/dashboard");
         })
         .catch((e) => {
+          this.isLoading = false;
           console.log(e);
         }
       )
     }
 
     return {
+      isLoginOpen: false,
+      isLoggedIn: false,
+      authUser: {},
       login,
       email,
       password,
     };
-  }
+  },
+  
+  mounted() {
+  firebase.default.auth().onAuthStateChanged((user) => {
+    if (user) {
+      this.isLoggedIn = true;
+      this.authUser = this.user;
+    } else {
+      this.isLoggedIn = false;
+      this.authUser = {};
+   }
+  });
+}
 });
 </script>

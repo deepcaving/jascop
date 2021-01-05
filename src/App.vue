@@ -21,6 +21,7 @@ export default defineComponent({
 
     return {
       layout,
+      isLoginOpen: false,
       isLoggedIn: false,
       authUser: {}
     };
@@ -29,10 +30,12 @@ export default defineComponent({
       firebase.default.auth().onAuthStateChanged(function(user) {
       if (user) {
         // User is signed in.
-          console.log(user);
+        this.isLoggedIn = true;
+        this.authUser = user;
       } else {
         // No user is signed in.
-        console.log('No user');
+        this.isLoggedIn = false;
+        this.authUser = {};
       }
     });
   },
