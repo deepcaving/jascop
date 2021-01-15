@@ -66,7 +66,7 @@
             class="py-2 px-4 text-center bg-indigo-600 rounded-md w-full text-white text-sm hover:bg-indigo-500"
           >
           <span v-if="!isLoading">Log in</span>
-          <span v-else>Loading...</span>
+          <span v-else>:hourglass:</span>
           </button>
 
         </div>
